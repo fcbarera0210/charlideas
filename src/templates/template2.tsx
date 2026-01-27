@@ -84,7 +84,7 @@ const OutlineButton = ({ children, onClick }: { children: ReactNode; onClick?: (
 const SectionTitle = ({ title, subtitle }: { title: string; subtitle: string }) => (
   <div className="mb-20">
     <RevealOnScroll>
-      <h2 className="text-4xl md:text-5xl font-bold text-white mb-6 tracking-tight">
+      <h2 className="text-3xl md:text-5xl font-bold text-white mb-6 tracking-tight">
         {title.split(" ").map((word: string, i: number) => (
           <span key={i} className={i % 2 !== 0 ? "text-transparent bg-clip-text bg-gradient-to-r from-[#00B4B9] to-[#4FD1C5]" : ""}>
             {word} 
@@ -176,46 +176,53 @@ const Hero = () => (
   <section className="relative min-h-screen flex items-center justify-center px-6 pt-20 z-10">
     <div className="max-w-5xl mx-auto text-center relative">
       <RevealOnScroll>
-        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#00B4B9]/10 border border-[#00B4B9]/20 text-[#00B4B9] text-sm font-semibold mb-8 backdrop-blur-sm">
+        <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#00B4B9]/10 border border-[#00B4B9]/20 text-[#00B4B9] text-xs md:text-sm font-semibold mb-8 backdrop-blur-sm">
           <span className="relative flex h-2 w-2">
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#00B4B9] opacity-75"></span>
             <span className="relative inline-flex rounded-full h-2 w-2 bg-[#00B4B9]"></span>
           </span>
-          Estudio de Productos Digitales
+          Digitalización de negocios y landings de alto impacto
         </div>
       </RevealOnScroll>
 
       <RevealOnScroll delay={100}>
-        <h1 className="text-5xl md:text-8xl font-bold text-white mb-8 leading-tight tracking-tight">
-          Productos que <br className="hidden md:block"/>
+        <h1 className="text-4xl sm:text-5xl md:text-8xl font-bold text-white mb-8 leading-tight tracking-tight">
+          Productos que{" "}
           <span className="relative inline-block">
              <span className="absolute -inset-1 bg-gradient-to-r from-[#00B4B9] to-[#0E7C6B] blur opacity-30"></span>
-             <span className="relative text-transparent bg-clip-text bg-gradient-to-r from-[#00B4B9] to-[#80ffdb]">funcionan</span>
+             <span className="relative text-transparent bg-clip-text bg-gradient-to-r from-[#00B4B9] to-[#80ffdb]">
+               convierten ideas
+             </span>
           </span>
           <span className="block text-3xl md:text-5xl md:inline text-slate-500 font-medium mt-2 md:mt-0 md:ml-4">
-            en la vida real.
+            en sistemas y landing pages reales.
           </span>
         </h1>
       </RevealOnScroll>
 
       <RevealOnScroll delay={200}>
         <p className="text-xl text-slate-400 mb-12 max-w-2xl mx-auto leading-relaxed">
-          Diseñamos y construimos sistemas web y marcas digitales pensadas para personas, negocios y uso diario. Sin buzzwords, solo resultados.
+          Desde un restaurante que necesita ordenar sus pedidos, hasta una landing para tu servicio profesional: diseñamos
+          y construimos productos digitales listos para operar, no maquetas.
         </p>
       </RevealOnScroll>
 
       <RevealOnScroll delay={300} className="flex flex-col sm:flex-row gap-5 justify-center">
-        <GlowingButton onClick={() => {
-          const el = document.getElementById('proyectos');
-          if (el) el.scrollIntoView({ behavior: 'smooth'});
-        }}>
-          Ver Proyectos <ArrowRight size={20} />
+        <GlowingButton
+          onClick={() => {
+            const el = document.getElementById('contacto');
+            if (el) el.scrollIntoView({ behavior: 'smooth'});
+          }}
+        >
+          Contar mi idea <ArrowRight size={20} />
         </GlowingButton>
-        <OutlineButton onClick={() => {
-          const el = document.getElementById('contacto');
-          if (el) el.scrollIntoView({ behavior: 'smooth'});
-        }}>
-          Hablemos
+        <OutlineButton
+          onClick={() => {
+            const el = document.getElementById('proyectos');
+            if (el) el.scrollIntoView({ behavior: 'smooth'});
+          }}
+        >
+          Ver proyectos reales
         </OutlineButton>
       </RevealOnScroll>
 
@@ -257,46 +264,74 @@ const Stats = () => (
   </section>
 );
 
-const ProjectCard = ({ project, span = false }: { project: Project; span?: boolean }) => (
-  <div className={`group relative rounded-3xl overflow-hidden bg-[#111827] border border-white/5 hover:border-[#00B4B9]/30 transition-all duration-500 hover:-translate-y-2 ${span ? 'md:col-span-2 lg:col-span-2' : ''}`}>
-    <div className={`absolute inset-0 bg-gradient-to-br ${project.imageGradient || 'from-slate-600 to-slate-800'} opacity-5 group-hover:opacity-10 transition-opacity duration-500`}></div>
-    <div className="relative p-8 h-full flex flex-col z-10">
-      <div className="flex justify-between items-start mb-6">
-        <div className={`p-3 rounded-xl bg-white/5 text-white ring-1 ring-white/10 group-hover:scale-110 transition-transform duration-300 flex items-center justify-center`}>
-            <img src={project.logo} alt={`Logo de ${project.title}`} className="h-8 w-auto object-contain" loading="lazy" />
+const ProjectCard = ({ project, span = false }: { project: Project; span?: boolean }) => {
+  const handleCardClick = () => {
+    if (project.deployedUrl) {
+      window.open(project.deployedUrl, '_blank', 'noopener,noreferrer');
+    }
+  };
+
+  const handleInnerLinkClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.stopPropagation();
+  };
+
+  const isClickable = Boolean(project.deployedUrl);
+
+  return (
+    <div
+      className={`group relative rounded-3xl overflow-hidden bg-[#111827] border border-white/5 hover:border-[#00B4B9]/30 transition-all duration-500 hover:-translate-y-2 ${span ? 'md:col-span-2 lg:col-span-2' : ''}`}
+      onClick={handleCardClick}
+      role={isClickable ? 'button' : undefined}
+      tabIndex={isClickable ? 0 : -1}
+      onKeyDown={(e) => {
+        if (!isClickable) return;
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          handleCardClick();
+        }
+      }}
+    >
+      <div className={`absolute inset-0 bg-gradient-to-br ${project.imageGradient || 'from-slate-600 to-slate-800'} opacity-5 group-hover:opacity-10 transition-opacity duration-500`}></div>
+      <div className="relative p-8 h-full flex flex-col z-10 cursor-pointer">
+        <div className="flex justify-between items-start mb-6">
+          <div className={`p-3 rounded-xl bg-white/5 text-white ring-1 ring-white/10 group-hover:scale-110 transition-transform duration-300 flex items-center justify-center`}>
+              <img src={project.logo} alt={`Logo de ${project.title}`} className="h-8 w-auto object-contain" loading="lazy" />
+          </div>
+          <span className="px-3 py-1 rounded-full text-xs font-bold bg-white/5 text-slate-300 border border-white/10 backdrop-blur-md">
+              {project.tag}
+          </span>
         </div>
-        <span className="px-3 py-1 rounded-full text-xs font-bold bg-white/5 text-slate-300 border border-white/10 backdrop-blur-md">
-            {project.tag}
-        </span>
-      </div>
-      <h3 className="text-2xl md:text-3xl font-bold text-white mb-3 group-hover:text-[#00B4B9] transition-colors">{project.title}</h3>
-      <p className="text-slate-400 leading-relaxed mb-8 flex-1">{project.shortDescription}</p>
-      <div className="flex items-center gap-4">
-        {project.deployedUrl && (
-          <a 
-            href={project.deployedUrl} 
-            target="_blank" 
-            rel="noopener noreferrer"
-            className="flex items-center text-[#00B4B9] font-semibold text-sm group-hover:translate-x-2 transition-transform cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#00B4B9] focus:ring-offset-2 focus:ring-offset-[#111827] rounded"
-          >
-            Ver proyecto <ExternalLink size={16} className="ml-2" />
-          </a>
-        )}
-        {project.githubUrl && (
-          <a 
-            href={project.githubUrl} 
-            target="_blank" 
-            rel="noopener noreferrer"
-            className="text-slate-500 hover:text-slate-300 transition-colors focus:outline-none focus:ring-2 focus:ring-[#00B4B9] focus:ring-offset-2 focus:ring-offset-[#111827] rounded p-1"
-            aria-label={`Ver código de ${project.title} en GitHub`}
-          >
-            <Github size={18} />
-          </a>
-        )}
+        <h3 className="text-2xl md:text-3xl font-bold text-white mb-3 group-hover:text-[#00B4B9] transition-colors">{project.title}</h3>
+        <p className="text-slate-400 leading-relaxed mb-8 flex-1">{project.shortDescription}</p>
+        <div className="flex items-center gap-4">
+          {project.deployedUrl && (
+            <a 
+              href={project.deployedUrl} 
+              target="_blank" 
+              rel="noopener noreferrer"
+              onClick={handleInnerLinkClick}
+              className="flex items-center text-[#00B4B9] font-semibold text-sm group-hover:translate-x-2 transition-transform cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#00B4B9] focus:ring-offset-2 focus:ring-offset-[#111827] rounded"
+            >
+              Ver proyecto <ExternalLink size={16} className="ml-2" />
+            </a>
+          )}
+          {project.githubUrl && (
+            <a 
+              href={project.githubUrl} 
+              target="_blank" 
+              rel="noopener noreferrer"
+              onClick={handleInnerLinkClick}
+              className="text-slate-500 hover:text-slate-300 transition-colors focus:outline-none focus:ring-2 focus:ring-[#00B4B9] focus:ring-offset-2 focus:ring-offset-[#111827] rounded p-1"
+              aria-label={`Ver código de ${project.title} en GitHub`}
+            >
+              <Github size={18} />
+            </a>
+          )}
+        </div>
       </div>
     </div>
-  </div>
-);
+  );
+};
 
 const Projects = () => {
   const projects = getFeaturedProjects();
@@ -304,11 +339,11 @@ const Projects = () => {
   const otherProjects = projects.slice(1);
 
   return (
-    <section id="proyectos" className="py-32 relative z-10">
+    <section id="proyectos" className="py-24 sm:py-32 relative z-10">
       <div className="max-w-7xl mx-auto px-6">
         <SectionTitle 
-          title="Proyectos Destacados" 
-          subtitle="No son demos. Son productos diseñados para resolver problemas reales y operar negocios."
+          title="Proyectos reales que ya están en producción" 
+          subtitle="Cuatro casos que muestran cómo convertimos ideas en sistemas y landings que la gente usa todos los días."
         />
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           <RevealOnScroll className="md:col-span-2 lg:col-span-2">
@@ -340,8 +375,8 @@ const Philosophy = () => (
     <div className="max-w-6xl mx-auto px-6 grid md:grid-cols-2 gap-16 items-start">
       <div className="sticky top-32">
         <SectionTitle 
-            title="Cómo trabajamos"
-            subtitle="Evitamos la burocracia de agencia tradicional. Nos enfocamos obsesivamente en lo que aporta valor real."
+          title="Cómo trabajamos"
+          subtitle="Evitamos la burocracia de agencia tradicional y las implementaciones a medias. Diseñamos a partir del problema real y de cómo se usa en el día a día."
         />
         <div className="p-6 rounded-2xl bg-gradient-to-br from-[#00B4B9]/10 to-transparent border border-[#00B4B9]/10 backdrop-blur-sm">
             <p className="text-[#00B4B9] font-medium italic">
@@ -351,10 +386,26 @@ const Philosophy = () => (
       </div>
       <div className="pt-8">
         <RevealOnScroll>
-            <MethodStep num="01" title="Entender el problema real" desc="Cada proyecto parte de una necesidad, no de elegir una tecnología. Diseñamos la solución antes de escribir código." />
-            <MethodStep num="02" title="Diseño de reglas y experiencia" desc="Definimos reglas claras de negocio y diseñamos interfaces que no requieran manual de instrucciones." />
-            <MethodStep num="03" title="Tecnología como herramienta" desc="Usamos IA y stacks modernos para acelerar, pero mantenemos control total sobre la lógica, el diseño y la calidad." />
-            <MethodStep num="04" title="Iteración basada en uso" desc="Lanzamos y mejoramos según datos reales." />
+          <MethodStep
+            num="01"
+            title="Entender el contexto y el negocio"
+            desc="Partimos por lo básico: qué vendes, cómo trabajas hoy y qué esperas que haga la web o el sistema en la práctica."
+          />
+          <MethodStep
+            num="02"
+            title="Definir reglas y experiencia"
+            desc="Aterrizamos reglas de negocio (pedidos, pagos, agendas, flujos) y las traducimos en pantallas que no necesitan manual."
+          />
+          <MethodStep
+            num="03"
+            title="Construir con tecnología adecuada"
+            desc="Usamos stacks modernos e IA para acelerar, pero siempre con foco en estabilidad, performance y mantenimiento simple."
+          />
+          <MethodStep
+            num="04"
+            title="Iterar con uso real"
+            desc="Después del lanzamiento, ajustamos en base a datos: qué usan tus clientes, qué te simplifica el día y qué sobra."
+          />
         </RevealOnScroll>
       </div>
     </div>
@@ -362,7 +413,7 @@ const Philosophy = () => (
 );
 
 const Services = () => (
-  <section id="servicios" className="py-24 relative z-10">
+  <section id="servicios" className="py-20 sm:py-24 relative z-10">
      <div className="max-w-7xl mx-auto px-6">
         <div className="bg-[#111827] rounded-[3rem] p-8 md:p-16 border border-white/5 relative overflow-hidden">
             <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[#00B4B9]/10 rounded-full blur-[100px]"></div>
@@ -402,10 +453,11 @@ const ContactForm = () => {
     
     // Simulación de envío antes de WhatsApp
     setTimeout(() => {
-        setStatus('success');
-        // Aquí iría la lógica futura de WhatsApp:
-        // const url = `https://wa.me/TUNUMERO?text=Hola! Mi nombre es ${formData.name}. ${formData.message}`;
-        // window.open(url, '_blank');
+    setStatus('success');
+    // Aquí, más adelante, se construirá el mensaje de WhatsApp usando nombre + descripción de la idea.
+    // const text = `Hola Charl!deas, soy ${formData.name}. ${formData.message}`;
+    // const url = `https://wa.me/TUNUMERO?text=${encodeURIComponent(text)}`;
+    // window.open(url, '_blank');
     }, 1500);
   };
 
@@ -415,8 +467,8 @@ const ContactForm = () => {
             <div className="h-20 w-20 bg-[#00B4B9]/20 rounded-full flex items-center justify-center mx-auto mb-6">
                 <MessageCircle className="text-[#00B4B9]" size={40} />
             </div>
-            <h3 className="text-2xl font-bold text-white mb-2">¡Mensaje Preparado!</h3>
-            <p className="text-slate-400 mb-8">Estamos listos para conversar por WhatsApp.</p>
+            <h3 className="text-2xl font-bold text-white mb-2">¡Mensaje preparado!</h3>
+            <p className="text-slate-400 mb-8">Cuando habilitemos el número oficial, este flujo abrirá directamente un chat de WhatsApp.</p>
             <GlowingButton onClick={() => setStatus('idle')} type="button">Enviar otro mensaje</GlowingButton>
         </div>
     );
@@ -427,11 +479,13 @@ const ContactForm = () => {
       <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-[#00B4B9]/50 to-transparent scale-x-0 group-hover:scale-x-100 transition-transform duration-700"></div>
       
       <div className="mb-8">
-        <label className="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-3 ml-1">Tu Identificador / Nombre</label>
+        <label className="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-3 ml-1">
+          Nombre o empresa
+        </label>
         <input 
           required
           type="text" 
-          placeholder="Ej. Juan Pérez o Empresa X"
+          placeholder="Ej. Juan de SushiWey o Estudio X"
           className="w-full bg-white/5 border border-white/10 rounded-xl px-5 py-4 text-white placeholder:text-slate-600 focus:outline-none focus:border-[#00B4B9]/50 focus:ring-1 focus:ring-[#00B4B9]/50 transition-all"
           value={formData.name}
           onChange={(e) => setFormData({...formData, name: e.target.value})}
@@ -439,11 +493,13 @@ const ContactForm = () => {
       </div>
 
       <div className="mb-10">
-        <label className="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-3 ml-1">¿En qué podemos ayudarte?</label>
+        <label className="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-3 ml-1">
+          Descripción breve de la idea o negocio
+        </label>
         <textarea 
           required
           rows={4}
-          placeholder="Cuéntanos brevemente tu idea..."
+          placeholder="Cuéntanos qué quieres digitalizar o qué tipo de landing necesitas..."
           className="w-full bg-white/5 border border-white/10 rounded-xl px-5 py-4 text-white placeholder:text-slate-600 focus:outline-none focus:border-[#00B4B9]/50 focus:ring-1 focus:ring-[#00B4B9]/50 transition-all resize-none"
           value={formData.message}
           onChange={(e) => setFormData({...formData, message: e.target.value})}
@@ -451,13 +507,15 @@ const ContactForm = () => {
       </div>
 
       <GlowingButton type="submit" className="w-full py-5" disabled={status === 'sending'} onClick={() => {}}>
-        {status === 'sending' ? 'Procesando...' : (
-            <>Iniciar conversación <MessageCircle size={20} /></>
+        {status === 'sending' ? 'Preparando mensaje...' : (
+          <>
+            Preparar mensaje para WhatsApp <MessageCircle size={20} />
+          </>
         )}
       </GlowingButton>
       
       <p className="text-center text-slate-600 text-[10px] mt-6 uppercase tracking-tighter">
-        Al hacer clic serás redirigido a nuestro chat de WhatsApp
+        Más adelante este botón abrirá un chat de WhatsApp con tu mensaje prellenado.
       </p>
     </form>
   );

@@ -19,15 +19,15 @@ export const projects: Project[] = [
   {
     id: 'sushiwey',
     title: 'SushiWey',
-    description: 'Sistema web desarrollado a medida para un local de sushi real. Permite a los clientes realizar pedidos en línea y seguir su estado en tiempo real, mientras el negocio gestiona órdenes, clientes, direcciones, métricas y operación diaria desde un panel administrativo. Incluye flujos completos de compra, tracking de pedidos, generación de comandas, geolocalización y un dashboard operativo pensado para uso real, incluso desde dispositivos móviles.',
-    shortDescription: 'Sistema web completo para un local de comida. Gestiona pedidos online, tracking en tiempo real y panel operativo. Una herramienta crítica para el negocio diario.',
+    description: 'Sistema web de pedidos en línea desarrollado a medida para un restaurante de sushi real. Permite a los clientes armar y enviar pedidos desde la web y seguir su estado en tiempo real, mientras el local controla cocina, delivery, retiro y consumo en mesa desde un panel operativo. Incluye rol de garzón y cocina, generación de comandas para impresión térmica, geolocalización con Google Maps y dashboard con métricas del negocio.',
+    shortDescription: 'Digitalización completa de un restaurante de sushi: pedidos online, panel de cocina y garzones, seguimiento en tiempo real y métricas del negocio.',
     tag: 'Sistema Operativo',
     category: 'Logistics & Ops',
     stack: ['React', 'TypeScript', 'Node.js', 'MongoDB', 'Real-time'],
     logo: '/logo-sushiwey.svg',
     colorBg: 'bg-gradient-to-br from-orange-400 to-red-500',
     imageGradient: 'from-orange-500 to-red-600',
-    deployedUrl: '', // TODO: Agregar URL desplegada
+      deployedUrl: 'https://sushiwey.vercel.app/',
     githubUrl: '', // TODO: Agregar repositorio GitHub
     featured: true,
     order: 1
@@ -35,15 +35,15 @@ export const projects: Project[] = [
   {
     id: 'lukita',
     title: 'Lukita',
-    description: 'Aplicación de finanzas personales creada para el control diario del dinero. Permite gestionar cuentas, ingresos, gastos, presupuestos y movimientos recurrentes, con soporte offline-first y sincronización automática. El foco del proyecto está en la simplicidad, el uso real y la flexibilidad mensual, adaptándose a la forma en que las personas realmente administran su dinero.',
-    shortDescription: 'App de finanzas personales offline-first. Presupuestos flexibles, soporte multidivisa y sincronización. Diseñada para la realidad financiera cotidiana.',
+    description: 'PWA de finanzas personales enfocada en la realidad chilena (CLP sin decimales). Permite gestionar cuentas, ingresos y gastos, presupuestos por categoría, transacciones recurrentes y búsquedas avanzadas, con soporte offline y sincronización con Firebase. El foco está en tener un tablero claro mes a mes, sin planillas, y con una navegación pensada para uso diario en móvil.',
+    shortDescription: 'PWA de finanzas personales en CLP: cuentas, presupuestos, recurrentes y reportes claros para entender tu plata sin planillas.',
     tag: 'Finanzas / Producto',
     category: 'Fintech',
     stack: ['PWA', 'React', 'Offline-first', 'IndexedDB', 'Data Viz'],
     logo: '/logo-lukita.svg',
     colorBg: 'bg-gradient-to-br from-green-400 to-[#0E7C6B]',
     imageGradient: 'from-emerald-500 to-teal-600',
-    deployedUrl: '', // TODO: Agregar URL desplegada
+      deployedUrl: 'https://lukita.vercel.app/',
     githubUrl: '', // TODO: Agregar repositorio GitHub
     featured: true,
     order: 2
@@ -51,15 +51,15 @@ export const projects: Project[] = [
   {
     id: 'postly',
     title: 'Postly',
-    description: 'Aplicación de gestión de tareas visual basada en tableros y post-its. Está diseñada para uso personal, priorizando la claridad mental, la rapidez y la mínima fricción. El proyecto se centra en decisiones de experiencia de usuario: drag & drop fluido, edición directa, uso en móvil y una interfaz limpia que evita la sobrecarga de opciones.',
-    shortDescription: 'Gestión de tareas visual inspirada en post-its. Prioriza la claridad mental y la rapidez sobre funciones complejas. Drag & drop fluido.',
+    description: 'Aplicación tipo tablero de post-its para organizar tareas personales. Está pensada para liberar la cabeza: crear columnas, arrastrar tareas, usar colores y un glosario propio, con autenticación por email y tablero privado por usuario. La prioridad del proyecto es la experiencia: drag & drop fluido, edición directa en desktop y mobile, diseño limpio y ligero para enfocarse en lo importante.',
+    shortDescription: 'Tablero personal de post-its con drag & drop y tablero privado por usuario para ordenar tu día sin complicarte.',
     tag: 'Productividad / UX',
     category: 'Productivity',
     stack: ['React', 'Interactive UX', 'Kanban', 'Drag & Drop', 'Simplicity'],
     logo: '/logo-Postly.svg',
     colorBg: 'bg-gradient-to-br from-blue-400 to-[#0A4F6E]',
     imageGradient: 'from-blue-500 to-indigo-600',
-    deployedUrl: '', // TODO: Agregar URL desplegada
+      deployedUrl: 'https://postly-three-blush.vercel.app/',
     githubUrl: '', // TODO: Agregar repositorio GitHub
     featured: true,
     order: 3
@@ -67,18 +67,36 @@ export const projects: Project[] = [
   {
     id: 'nutritrack',
     title: 'NutriTrack',
-    description: 'Plataforma de seguimiento nutricional enfocada en hábitos diarios. Permite registrar comidas, macros, hidratación y actividad física, entregando visualizaciones claras y cálculos automáticos. El proyecto explora el uso de datos, visualización y apoyo automatizado para mejorar la conciencia alimentaria y la constancia.',
-    shortDescription: 'Plataforma de seguimiento nutricional basada en datos y hábitos. Visualización de macros, registro de actividad y cálculos automáticos.',
+    description: 'Plataforma web para registrar comidas, macros, hidratación y ejercicio con una experiencia alineada a un diseño Figma “pixel‑perfect”. Incluye autenticación, dashboard diario con rachas, estadísticas semanales, perfil con objetivos y un buscador nutricional apoyado en IA (DeepSeek + Groq) para completar información de alimentos automáticamente.',
+    shortDescription: 'App web de seguimiento nutricional con dashboard diario, rachas, estadísticas y búsqueda de macros por IA para apoyar hábitos constantes.',
     tag: 'Health / Data',
     category: 'HealthTech',
     stack: ['React', 'Data Visualization', 'Charts', 'Health Tracking', 'Analytics'],
     logo: '/logo-nutritrack.svg',
     colorBg: 'bg-gradient-to-br from-lime-400 to-green-600',
     imageGradient: 'from-lime-500 to-green-600',
-    deployedUrl: '', // TODO: Agregar URL desplegada
+      deployedUrl: 'https://nutritrack-nu-lyart.vercel.app/',
     githubUrl: '', // TODO: Agregar repositorio GitHub
     featured: true,
     order: 4
+  },
+  {
+    id: 'comtelsat',
+    title: 'Comtelsat',
+    description:
+      'Sitio corporativo para Comtelsat, empresa de telecomunicaciones, seguridad, automatizaciones y energía solar en Curicó, Chile. El frontend en Vue 3 y TypeScript organiza servicios por categoría, integra una galería multimedia y un formulario de contacto listo para conectar con backend o email. El proyecto está optimizado con Vite, lazy loading de imágenes y despliegue en Firebase Hosting para un rendimiento confiable.',
+    shortDescription:
+      'Sitio corporativo en Vue 3 para Comtelsat: servicios de telecomunicaciones, seguridad, automatizaciones y energía solar, optimizado y desplegado en Firebase.',
+    tag: 'Sitio Corporativo',
+    category: 'Telecom & Seguridad',
+    stack: ['Vue 3', 'TypeScript', 'Vite', 'Sass', 'Firebase'],
+    logo: '/logo-comtelsat.svg',
+    colorBg: 'bg-gradient-to-br from-blue-500 to-sky-600',
+    imageGradient: 'from-blue-500 to-sky-600',
+      deployedUrl: 'https://comtelsat-1109.web.app/',
+    githubUrl: '', // TODO: Agregar repositorio GitHub
+    featured: true,
+    order: 5
   }
 ];
 

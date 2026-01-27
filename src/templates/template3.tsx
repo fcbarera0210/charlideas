@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef, type ReactNode } from 'react';
 import type { LucideIcon } from 'lucide-react';
 import { 
   ArrowUpRight, 
@@ -12,6 +12,7 @@ import {
 } from 'lucide-react';
 import { getFeaturedProjects } from '../data/projects';
 import { SEO } from '../components/SEO';
+import { motion, useInView } from 'framer-motion';
 
 // --- BRAND ASSETS ---
 
@@ -67,9 +68,83 @@ const SectionHeading = ({ number, title, subtitle }: { number: string; title: st
       <span className="text-[#00B4B9] font-mono text-sm font-bold tracking-widest">{number}</span>
       <div className="h-px w-12 bg-[#00B4B9]/30"></div>
     </div>
-    <h2 className="text-4xl md:text-6xl font-bold text-white tracking-tighter mb-6 uppercase">{title}</h2>
+    <h2 className="text-3xl md:text-6xl font-bold text-white tracking-tighter mb-6 uppercase break-words">{title}</h2>
     <p className="text-slate-500 text-lg max-w-2xl leading-relaxed">{subtitle}</p>
   </div>
+);
+
+// --- ANIMACIONES CON FRAMER MOTION ---
+
+type MotionDirection = 'left' | 'right' | 'up';
+
+const useScrollReveal = () => {
+  const ref = useRef<HTMLDivElement | null>(null);
+  const inView = useInView(ref, { amount: 0.2, once: true });
+  return { ref, inView };
+};
+
+const getDirectionVariants = (direction: MotionDirection) => {
+  const offset = 80;
+  switch (direction) {
+    case 'left':
+      return {
+        hidden: { opacity: 0, x: -offset },
+        visible: { opacity: 1, x: 0 },
+      };
+    case 'right':
+      return {
+        hidden: { opacity: 0, x: offset },
+        visible: { opacity: 1, x: 0 },
+      };
+    default:
+      return {
+        hidden: { opacity: 0, y: 40 },
+        visible: { opacity: 1, y: 0 },
+      };
+  }
+};
+
+const MotionReveal = ({
+  children,
+  delay = 0,
+  className = '',
+  direction = 'up',
+}: {
+  children: ReactNode;
+  delay?: number;
+  className?: string;
+  direction?: MotionDirection;
+}) => {
+  const { ref, inView } = useScrollReveal();
+  const variants = getDirectionVariants(direction);
+
+  return (
+    <motion.div
+      ref={ref}
+      className={className}
+      initial="hidden"
+      animate={inView ? 'visible' : 'hidden'}
+      variants={variants}
+      transition={{
+        duration: 0.5,
+        ease: [0.22, 1, 0.36, 1],
+        delay: delay / 1000,
+      }}
+    >
+      {children}
+    </motion.div>
+  );
+};
+
+const FloatPill = ({ children }: { children: ReactNode }) => (
+  <motion.div
+    className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-[#00B4B9]/20 bg-[#00B4B9]/5 text-[#00B4B9] text-[9px] sm:text-[10px] font-bold uppercase tracking-[0.25em] mb-8"
+    initial={{ opacity: 0, y: -20 }}
+    animate={{ opacity: 1, y: 0 }}
+    transition={{ duration: 0.4, ease: 'easeOut' }}
+  >
+    {children}
+  </motion.div>
 );
 
 // --- SECTIONS ---
@@ -77,13 +152,24 @@ const SectionHeading = ({ number, title, subtitle }: { number: string; title: st
 const Navbar = () => (
   <nav className="fixed w-full z-50 bg-[#050505]/80 backdrop-blur-md border-b border-white/5 py-4">
     <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
-      <div className="flex items-center gap-4 group cursor-pointer" onClick={() => window.scrollTo({top: 0, behavior: 'smooth'})}>
-        <CharlideasLogo className="h-10 w-10 transition-transform duration-500 group-hover:scale-110" />
+      <motion.div
+        className="flex items-center gap-4 group cursor-pointer"
+        onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+        whileHover={{ scale: 1.03 }}
+        transition={{ type: 'spring', stiffness: 260, damping: 20 }}
+      >
+        <motion.div
+          className="inline-flex"
+          animate={{ rotate: [0, -5, 3, 0] }}
+          transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
+        >
+          <CharlideasLogo className="h-10 w-10" />
+        </motion.div>
         <div className="flex flex-col">
           <span className="text-white font-black tracking-tighter text-xl leading-none">Charl!deas</span>
           <span className="text-[10px] text-[#00B4B9] font-mono uppercase tracking-[0.2em]">Product Studio</span>
         </div>
-      </div>
+      </motion.div>
       <div className="hidden md:flex items-center gap-8">
         {['Proyectos', 'Servicios', 'Método'].map(link => (
           <a key={link} href={`#${link === 'Método' ? 'método' : link.toLowerCase()}`} className="text-xs font-bold text-slate-400 hover:text-white transition-colors uppercase tracking-widest focus:outline-none focus:ring-2 focus:ring-[#00B4B9] focus:ring-offset-2 focus:ring-offset-[#050505] rounded">
@@ -108,26 +194,32 @@ const Hero = () => (
   <section className="relative min-h-screen flex flex-col justify-center px-6 overflow-hidden">
     <div className="absolute top-1/4 -right-20 w-[600px] h-[600px] bg-[#00B4B9]/5 rounded-full blur-[120px] pointer-events-none"></div>
     <div className="max-w-7xl mx-auto w-full relative z-10">
-      <div className="inline-block px-4 py-1.5 rounded-full border border-[#00B4B9]/20 bg-[#00B4B9]/5 text-[#00B4B9] text-[10px] font-bold uppercase tracking-[0.3em] mb-8">
-        Estudio de Productos Digitales
-      </div>
-      <h1 className="text-6xl md:text-[140px] font-black text-white leading-[0.85] tracking-tighter mb-10 uppercase">
-        PRODUCTOS DIGITALES <br />
-        <span className="text-transparent bg-clip-text bg-gradient-to-r from-slate-600 to-slate-200">QUE FUNCIONAN</span> <br />
-        <span className="text-slate-500">EN LA VIDA REAL.</span>
-      </h1>
+      <MotionReveal direction="left">
+        <FloatPill>
+          Digitalización de negocios · Landings para marcas personales
+        </FloatPill>
+        <motion.h1
+          className="text-4xl sm:text-5xl md:text-[96px] lg:text-[140px] font-black text-white leading-[0.9] md:leading-[0.85] tracking-tighter mb-10 uppercase text-left"
+          variants={getDirectionVariants('left')}
+        >
+          DIGITALIZAMOS <br />
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-slate-600 to-slate-200">TU NEGOCIO</span> <br />
+          <span className="text-slate-500">&amp; TU MARCA.</span>
+        </motion.h1>
+      </MotionReveal>
       <div className="grid md:grid-cols-12 gap-10 items-end">
-        <div className="md:col-span-6">
+        <MotionReveal className="md:col-span-6" delay={150} direction="left">
           <p className="text-slate-400 text-xl leading-relaxed font-medium">
-            Diseñamos y construimos sistemas web y marcas digitales pensadas para personas, negocios y uso diario.
+            Sistemas web y landing pages para que tus clientes puedan pedir, reservar, pagar o entender qué ofreces sin
+            perderse entre formularios eternos ni menús confusos.
           </p>
-        </div>
-        <div className="md:col-span-6 flex md:justify-end gap-4">
+        </MotionReveal>
+        <MotionReveal className="md:col-span-6 flex md:justify-end gap-4" delay={200} direction="right">
           <div className="flex flex-col items-center">
             <div className="h-16 w-px bg-gradient-to-b from-[#00B4B9] to-transparent"></div>
             <span className="text-[#00B4B9] text-[10px] font-mono uppercase tracking-widest rotate-90 mt-12 origin-left tracking-[0.5em]">Explora</span>
           </div>
-        </div>
+        </MotionReveal>
       </div>
     </div>
   </section>
@@ -137,67 +229,110 @@ const ProjectGrid = () => {
   const projects = getFeaturedProjects();
 
   return (
-    <section id="proyectos" className="py-32 px-6 bg-[#080808]">
+    <section id="proyectos" className="py-24 sm:py-32 px-6 bg-[#080808]">
       <div className="max-w-7xl mx-auto">
         <SectionHeading 
           number="01" 
-          title="Proyectos" 
-          subtitle="No son demos. Son productos diseñados para resolver problemas reales y operar negocios."
+          title="Proyectos reales" 
+          subtitle="Cuatro casos donde pasamos de una necesidad concreta (pedidos, finanzas, nutrición, foco) a un producto digital que se usa todos los días."
         />
         <div className="grid md:grid-cols-2 gap-px bg-white/5 border border-white/5 overflow-hidden">
           {projects.map((project, idx) => {
             const isSushiWey = project.id === 'sushiwey';
             const isLukita = project.id === 'lukita';
-            
-            return (
-            <div key={project.id} className="group relative bg-[#050505] p-10 md:p-14 hover:bg-[#0A0A0A] transition-colors duration-500">
-              <div className="absolute top-0 right-0 p-8 opacity-0 group-hover:opacity-100 transition-all duration-300 transform group-hover:-translate-y-1 group-hover:translate-x-1">
-                <ArrowUpRight className="text-[#00B4B9]" size={32} />
-              </div>
-              <p className="text-[#00B4B9] font-mono text-xs mb-4">{String(idx + 1).padStart(2, '0')} — {project.category}</p>
-              <h3 className="text-4xl font-bold text-white mb-6 tracking-tighter uppercase">{project.title}</h3>
-              
-              <p className="text-slate-500 text-sm leading-relaxed mb-10 max-w-sm group-hover:text-slate-300 transition-colors">
-                {project.shortDescription}
-              </p>
 
-              <div className="flex items-center gap-6">
-                <div className={`p-4 rounded-2xl bg-white/5 border border-white/10 group-hover:scale-110 transition-transform flex items-center justify-center min-w-[72px] h-[72px]`}>
-                  {isSushiWey ? (
-                    <SushiWeyLogo className="h-12 w-auto" />
-                  ) : isLukita ? (
-                    <LukitaLogo className="h-7 w-auto" />
-                  ) : (
-                    <img src={project.logo} alt={`Logo de ${project.title}`} className="h-12 w-auto object-contain" loading="lazy" />
-                  )}
-                </div>
-                <div className="h-px flex-1 bg-white/10"></div>
-                <div className="flex items-center gap-3">
-                  {project.deployedUrl && (
-                    <a 
-                      href={project.deployedUrl} 
-                      target="_blank" 
-                      rel="noopener noreferrer"
-                      className="text-[#00B4B9] hover:text-[#00ffff] transition-colors focus:outline-none focus:ring-2 focus:ring-[#00B4B9] focus:ring-offset-2 focus:ring-offset-[#050505] rounded p-1"
-                      aria-label={`Ver ${project.title}`}
+            const direction: MotionDirection = idx % 2 === 0 ? 'left' : 'right';
+            
+            const handleCardClick = () => {
+              if (project.deployedUrl) {
+                window.open(project.deployedUrl, '_blank', 'noopener,noreferrer');
+              }
+            };
+
+            const handleInnerLinkClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+              e.stopPropagation();
+            };
+
+            const isClickable = Boolean(project.deployedUrl);
+
+            return (
+              <MotionReveal
+                key={project.id}
+                delay={idx * 120}
+                direction={direction}
+              >
+                <div
+                  className="group relative bg-[#050505] p-10 md:p-14 hover:bg-[#0A0A0A] transition-colors duration-500 cursor-pointer"
+                  onClick={handleCardClick}
+                  role={isClickable ? 'button' : undefined}
+                  tabIndex={isClickable ? 0 : -1}
+                  onKeyDown={(e) => {
+                    if (!isClickable) return;
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault();
+                      handleCardClick();
+                    }
+                  }}
+                >
+                  <motion.div
+                    className="absolute top-0 right-0 p-8 opacity-0 group-hover:opacity-100"
+                    initial={{ x: 10, y: -10 }}
+                    whileHover={{ x: 0, y: 0 }}
+                    transition={{ type: 'spring', stiffness: 260, damping: 20 }}
+                  >
+                    <ArrowUpRight className="text-[#00B4B9]" size={32} />
+                  </motion.div>
+                  <p className="text-[#00B4B9] font-mono text-xs mb-4">{String(idx + 1).padStart(2, '0')} — {project.category}</p>
+                  <h3 className="text-4xl font-bold text-white mb-6 tracking-tighter uppercase">{project.title}</h3>
+                  
+                  <p className="text-slate-500 text-sm leading-relaxed mb-10 max-w-sm group-hover:text-slate-300 transition-colors">
+                    {project.shortDescription}
+                  </p>
+
+                  <div className="flex items-center gap-6">
+                    <motion.div
+                      className="p-4 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center min-w-[72px] h-[72px]"
+                      whileHover={{ scale: 1.08, rotate: -2 }}
+                      transition={{ type: 'spring', stiffness: 260, damping: 18 }}
                     >
-                      <ExternalLink size={20} />
-                    </a>
-                  )}
-                  {project.githubUrl && (
-                    <a 
-                      href={project.githubUrl} 
-                      target="_blank" 
-                      rel="noopener noreferrer"
-                      className="text-slate-500 hover:text-slate-300 transition-colors focus:outline-none focus:ring-2 focus:ring-[#00B4B9] focus:ring-offset-2 focus:ring-offset-[#050505] rounded p-1"
-                      aria-label={`Ver código de ${project.title} en GitHub`}
-                    >
-                      <Github size={20} />
-                    </a>
-                  )}
+                      {isSushiWey ? (
+                        <SushiWeyLogo className="h-12 w-auto" />
+                      ) : isLukita ? (
+                        <LukitaLogo className="h-7 w-auto" />
+                      ) : (
+                        <img src={project.logo} alt={`Logo de ${project.title}`} className="h-12 w-auto object-contain" loading="lazy" />
+                      )}
+                    </motion.div>
+                    <div className="h-px flex-1 bg-white/10"></div>
+                    <div className="flex items-center gap-3">
+                      {project.deployedUrl && (
+                        <a 
+                          href={project.deployedUrl} 
+                          target="_blank" 
+                          rel="noopener noreferrer"
+                          onClick={handleInnerLinkClick}
+                          className="text-[#00B4B9] hover:text-[#00ffff] transition-colors focus:outline-none focus:ring-2 focus:ring-[#00B4B9] focus:ring-offset-2 focus:ring-offset-[#050505] rounded p-1"
+                          aria-label={`Ver ${project.title}`}
+                        >
+                          <ExternalLink size={20} />
+                        </a>
+                      )}
+                      {project.githubUrl && (
+                        <a 
+                          href={project.githubUrl} 
+                          target="_blank" 
+                          rel="noopener noreferrer"
+                          onClick={handleInnerLinkClick}
+                          className="text-slate-500 hover:text-slate-300 transition-colors focus:outline-none focus:ring-2 focus:ring-[#00B4B9] focus:ring-offset-2 focus:ring-offset-[#050505] rounded p-1"
+                          aria-label={`Ver código de ${project.title} en GitHub`}
+                        >
+                          <Github size={20} />
+                        </a>
+                      )}
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </div>
+              </MotionReveal>
             );
           })}
         </div>
@@ -224,29 +359,37 @@ const ServiceCard = ({ title, items, icon: Icon }: { title: string; items: strin
 );
 
 const Services = () => (
-  <section id="servicios" className="py-32 px-6">
+  <section id="servicios" className="py-24 sm:py-32 px-6">
     <div className="max-w-7xl mx-auto">
-      <SectionHeading 
-        number="02" 
-        title="Capacidades" 
-        subtitle="Abordamos cada desafío con una visión holística, combinando ingeniería de software, diseño de interfaces y estrategia de negocio."
-      />
+      <MotionReveal direction="left">
+        <SectionHeading 
+          number="02" 
+          title="Capacidades" 
+          subtitle="Abordamos cada desafío con una visión holística, combinando ingeniería de software, diseño de interfaces y estrategia de negocio."
+        />
+      </MotionReveal>
       <div className="grid md:grid-cols-3 gap-8">
-        <ServiceCard 
-          icon={Code}
-          title="Ingeniería Web"
-          items={['Web Apps Progresivas', 'Sistemas de Gestión', 'Dashboards de Datos', 'API Development']}
-        />
-        <ServiceCard 
-          icon={Layout}
-          title="Diseño de Sistemas"
-          items={['UX / UI Architecture', 'Diseño de Interacción', 'Identidad Digital', 'Prototipado de Alta']}
-        />
-        <ServiceCard 
-          icon={Layers}
-          title="Estrategia"
-          items={['Auditoría de Producto', 'Escalabilidad Técnica', 'Consultoría Tecnológica', 'Optimización de Flujos']}
-        />
+        <MotionReveal delay={100} direction="left">
+          <ServiceCard 
+            icon={Code}
+            title="Ingeniería Web"
+            items={['Web Apps Progresivas', 'Sistemas de Gestión', 'Dashboards de Datos', 'API Development']}
+          />
+        </MotionReveal>
+        <MotionReveal delay={150} direction="up">
+          <ServiceCard 
+            icon={Layout}
+            title="Diseño de Sistemas"
+            items={['UX / UI Architecture', 'Diseño de Interacción', 'Identidad Digital', 'Prototipado de Alta']}
+          />
+        </MotionReveal>
+        <MotionReveal delay={200} direction="right">
+          <ServiceCard 
+            icon={Layers}
+            title="Estrategia"
+            items={['Auditoría de Producto', 'Escalabilidad Técnica', 'Consultoría Tecnológica', 'Optimización de Flujos']}
+          />
+        </MotionReveal>
       </div>
     </div>
   </section>
@@ -255,136 +398,147 @@ const Services = () => (
 const Methodology = () => (
   <section id="método" className="py-32 px-6 bg-[#0A0A0A]">
     <div className="max-w-6xl mx-auto">
-      <SectionHeading 
-        number="03" 
-        title="Cómo trabajamos" 
-        subtitle="Evitamos la burocracia de agencia. Nos enfocamos en lo que aporta valor al usuario final."
-      />
+      <MotionReveal direction="left">
+        <SectionHeading 
+          number="03" 
+          title="Cómo trabajamos" 
+          subtitle="Menos reuniones y más producto: entendemos el negocio, definimos reglas y lanzamos algo que puedas usar rápido."
+        />
+      </MotionReveal>
       <div className="grid md:grid-cols-2 gap-16">
-        <div className="space-y-8">
+        <MotionReveal className="space-y-8" delay={100} direction="left">
           <div className="relative pl-12 border-l border-white/10 pb-8 last:pb-0">
             <div className="absolute left-0 top-0 -translate-x-1/2 w-8 h-8 rounded-full bg-[#050505] border border-[#00B4B9] flex items-center justify-center text-[#00B4B9] font-bold text-sm">
               1
             </div>
             <h3 className="text-xl font-bold text-white mb-2">Entender el problema real</h3>
-            <p className="text-slate-500">Cada proyecto parte de una necesidad, no de elegir una tecnología. Diseñamos la solución antes de escribir código.</p>
+            <p className="text-slate-500">Qué necesitas que pase: más pedidos, más claridad de gastos, mejor seguimiento, una landing que explique bien tu servicio.</p>
           </div>
           <div className="relative pl-12 border-l border-white/10 pb-8 last:pb-0">
             <div className="absolute left-0 top-0 -translate-x-1/2 w-8 h-8 rounded-full bg-[#050505] border border-[#00B4B9] flex items-center justify-center text-[#00B4B9] font-bold text-sm">
               2
             </div>
             <h3 className="text-xl font-bold text-white mb-2">Diseño de reglas y experiencia</h3>
-            <p className="text-slate-500">Definimos reglas claras de negocio y diseñamos interfaces que no requieran manual de instrucciones.</p>
+            <p className="text-slate-500">Definimos reglas claras (estados de pedido, flujos de cobro, objetivos) y las bajamos a una interfaz sin manual.</p>
           </div>
-        </div>
-        <div className="space-y-8">
+        </MotionReveal>
+        <MotionReveal className="space-y-8" delay={150} direction="right">
           <div className="relative pl-12 border-l border-white/10 pb-8 last:pb-0">
             <div className="absolute left-0 top-0 -translate-x-1/2 w-8 h-8 rounded-full bg-[#050505] border border-[#00B4B9] flex items-center justify-center text-[#00B4B9] font-bold text-sm">
               3
             </div>
             <h3 className="text-xl font-bold text-white mb-2">Tecnología como herramienta</h3>
-            <p className="text-slate-500">Usamos IA y stacks modernos para acelerar, pero mantenemos control total sobre la lógica, el diseño y la calidad.</p>
+            <p className="text-slate-500">Elegimos stack por estabilidad y performance, no por moda. Usamos IA donde suma, pero el diseño y la lógica son humanos.</p>
           </div>
           <div className="relative pl-12 border-l border-white/10 pb-8 last:pb-0">
             <div className="absolute left-0 top-0 -translate-x-1/2 w-8 h-8 rounded-full bg-[#050505] border border-[#00B4B9] flex items-center justify-center text-[#00B4B9] font-bold text-sm">
               4
             </div>
             <h3 className="text-xl font-bold text-white mb-2">Iteración basada en uso</h3>
-            <p className="text-slate-500">Lanzamos y mejoramos según datos reales.</p>
+            <p className="text-slate-500">Lanzamos, medimos qué se usa de verdad y ajustamos a partir de tu operación diaria, no de supuestos.</p>
           </div>
-        </div>
+        </MotionReveal>
       </div>
     </div>
   </section>
 );
 
 const ContactSection = () => {
-  const [formData, setFormData] = useState({ name: '', project: '' });
+  const [formData, setFormData] = useState({ name: '', description: '' });
   
   const sendToWhatsApp = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const message = `Hola Charl!deas, soy ${formData.name}. Tengo una idea para un proyecto de ${formData.project}. Me gustaría conversar.`;
-    window.open(`https://wa.me/TUNUMERO?text=${encodeURIComponent(message)}`, '_blank');
+    // Más adelante se construirá el mensaje real para WhatsApp usando nombre + descripción de la idea.
+    // const message = `Hola Charl!deas, soy ${formData.name}. ${formData.description}`;
+    // window.open(`https://wa.me/TUNUMERO?text=${encodeURIComponent(message)}`, '_blank');
   };
 
   return (
     <section id="contacto" className="py-32 px-6 bg-white rounded-t-[3rem] md:rounded-t-[5rem]">
       <div className="max-w-7xl mx-auto">
         <div className="grid lg:grid-cols-2 gap-20 items-center">
-          <div>
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-[#00B4B9]/10 text-[#00B4B9] text-[10px] font-black uppercase tracking-widest mb-6">
-              Hablemos
-            </div>
-            <h2 className="text-5xl md:text-7xl font-black text-black tracking-tighter mb-8 leading-[0.9] uppercase">
-              ¿LISTO PARA <br /> <span className="text-slate-300 font-bold italic">CONSTRUIR?</span>
-            </h2>
-            <p className="text-slate-600 text-lg md:text-xl leading-relaxed max-w-md">
-              Omitamos los correos. Cuéntanos quién eres y qué tienes en mente; el siguiente paso es una línea directa vía WhatsApp.
-            </p>
-          </div>
-
-          <form onSubmit={sendToWhatsApp} className="bg-[#f8f8f8] p-8 md:p-12 rounded-[3rem] border border-black/5 shadow-xl">
-            <div className="space-y-8">
-              <div className="group">
-                <label className="block text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2">Tu Nombre / Empresa</label>
-                <input 
-                  required
-                  type="text" 
-                  placeholder="Ej: Juan de Empresa X"
-                  className="w-full bg-transparent border-b-2 border-slate-200 py-4 text-xl md:text-2xl font-bold focus:outline-none focus:border-[#00B4B9] transition-colors placeholder:text-slate-300"
-                  value={formData.name}
-                  onChange={(e) => setFormData({...formData, name: e.target.value})}
-                />
+          <MotionReveal direction="left">
+            <div>
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-[#00B4B9]/10 text-[#00B4B9] text-[10px] font-black uppercase tracking-widest mb-6">
+                Hablemos
               </div>
-              <div>
-                <label className="block text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2">Tipo de Proyecto</label>
-                <select 
-                  className="w-full bg-transparent border-b-2 border-slate-200 py-4 text-xl md:text-2xl font-bold focus:outline-none focus:border-[#00B4B9] transition-colors appearance-none"
-                  value={formData.project}
-                  onChange={(e) => setFormData({...formData, project: e.target.value})}
+              <h2 className="text-4xl sm:text-5xl md:text-7xl font-black text-black tracking-tighter mb-8 leading-[0.95] md:leading-[0.9] uppercase">
+                ¿LISTO PARA <br /> <span className="text-slate-300 font-bold italic">CONSTRUIR?</span>
+              </h2>
+              <p className="text-slate-600 text-lg md:text-xl leading-relaxed max-w-md">
+                Omitamos los correos. Cuéntanos quién eres y qué tienes en mente; el siguiente paso es una línea directa vía WhatsApp.
+              </p>
+            </div>
+          </MotionReveal>
+
+          <MotionReveal delay={150} direction="right">
+            <form onSubmit={sendToWhatsApp} className="bg-[#f8f8f8] p-8 md:p-12 rounded-[3rem] border border-black/5 shadow-xl">
+              <div className="space-y-8">
+                <div className="group">
+                  <label className="block text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2">
+                    Nombre o empresa
+                  </label>
+                  <input 
+                    required
+                    type="text" 
+                    placeholder="Ej: Juan de SushiWey o Estudio X"
+                    className="w-full bg-transparent border-b-2 border-slate-200 py-4 text-xl md:text-2xl font-bold focus:outline-none focus:border-[#00B4B9] transition-colors placeholder:text-slate-300"
+                    value={formData.name}
+                    onChange={(e) => setFormData({...formData, name: e.target.value})}
+                  />
+                </div>
+                <div>
+                  <label className="block text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2">
+                    Describe tu idea o necesidad
+                  </label>
+                  <textarea 
+                    required
+                    rows={4}
+                    placeholder="Cuéntanos qué quieres digitalizar, qué tipo de landing necesitas o qué problema quieres resolver..."
+                    className="w-full bg-transparent border-b-2 border-slate-200 py-4 text-base md:text-lg font-medium focus:outline-none focus:border-[#00B4B9] transition-colors placeholder:text-slate-300 resize-none"
+                    value={formData.description}
+                    onChange={(e) => setFormData({...formData, description: e.target.value})}
+                  />
+                </div>
+                <button 
+                  type="submit"
+                  className="w-full bg-black text-white py-6 rounded-2xl flex items-center justify-center gap-4 text-lg font-bold hover:bg-[#00B4B9] transition-all duration-300 group"
                 >
-                  <option value="">Selecciona una opción</option>
-                  <option value="Web App">Web Application</option>
-                  <option value="Mobile App">Mobile Application</option>
-                  <option value="Branding">Branding & UI</option>
-                  <option value="Consultoría">Consultoría</option>
-                </select>
+                  Preparar mensaje para WhatsApp <MessageCircle className="group-hover:rotate-12 transition-transform" />
+                </button>
               </div>
-              <button 
-                type="submit"
-                className="w-full bg-black text-white py-6 rounded-2xl flex items-center justify-center gap-4 text-lg font-bold hover:bg-[#00B4B9] transition-all duration-300 group"
-              >
-                Iniciar en WhatsApp <MessageCircle className="group-hover:rotate-12 transition-transform" />
-              </button>
-            </div>
-          </form>
+            </form>
+          </MotionReveal>
         </div>
 
-        <div className="mt-32 pt-12 border-t border-black/5 grid grid-cols-2 md:grid-cols-4 gap-8">
-           {[
-             { label: 'Studio', value: 'Santiago, CL' },
-             { label: 'Disponibilidad', value: 'Q1 - 2026' },
-             { label: 'E-mail', value: 'hola@charlideas.com' },
-             { label: 'Social', value: 'LinkedIn / GitHub' }
-           ].map((item, i) => (
-             <div key={i}>
-                <span className="block text-[10px] font-black uppercase tracking-widest text-slate-400 mb-1">{item.label}</span>
-                <span className="text-sm font-bold text-black">{item.value}</span>
-             </div>
-           ))}
-        </div>
       </div>
     </section>
   );
 };
 
 const Footer = () => (
-  <footer className="bg-white py-12 border-t border-black/5 text-center">
-    <div className="flex flex-col items-center gap-6">
-      <CharlideasLogo className="h-8 w-8 grayscale opacity-50" />
-      <p className="text-[10px] font-black uppercase tracking-[0.4em] text-slate-400">
-        Charlideas © 2026 — Engineering Digital Simplicity
-      </p>
+  <footer className="bg-white py-8 border-t border-black/5">
+    <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center md:items-center justify-between gap-6">
+      <div className="flex items-center gap-3 self-start md:self-auto">
+        <CharlideasLogo className="h-7 w-7" />
+        <span className="text-sm font-bold text-black tracking-tight">Charl!deas</span>
+      </div>
+
+      <div className="flex items-center gap-6 text-sm text-slate-600">
+        <a href="#" className="hover:text-[#00B4B9] transition-colors">
+          LinkedIn
+        </a>
+        <a href="#" className="hover:text-[#00B4B9] transition-colors">
+          GitHub
+        </a>
+        <a href="#" className="hover:text-[#00B4B9] transition-colors">
+          WhatsApp
+        </a>
+      </div>
+
+      <div className="text-xs text-slate-500 text-center md:text-right">
+        © {new Date().getFullYear()} Charl!deas · Desarrollo realizado por Charl!deas
+      </div>
     </div>
   </footer>
 );

@@ -17,6 +17,13 @@ const FloatingMenu: React.FC<FloatingMenuProps> = ({ activeTemplate, onTemplateC
   const [dragStart, setDragStart] = useState<{ x: number; y: number } | null>(null);
   const [hasMoved, setHasMoved] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
+  const [menuPlacement, setMenuPlacement] = useState<{
+    horizontal: 'left' | 'right';
+    vertical: 'up' | 'down';
+  }>({
+    horizontal: 'right',
+    vertical: 'down',
+  });
 
   const templates = [
     { id: 1, name: 'Template 1' },
@@ -154,6 +161,26 @@ const FloatingMenu: React.FC<FloatingMenuProps> = ({ activeTemplate, onTemplateC
     return () => window.removeEventListener('resize', handleResize);
   }, [isExpanded]);
 
+  // Calcular hacia dónde se despliega el menú (izquierda/derecha y arriba/abajo)
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+
+    const margin = 16;
+    const buttonSize = 60; // tamaño aproximado del botón principal
+    const optionWidth = 150; // ancho aproximado de los botones de template
+    const optionHeight = templates.length * 40; // alto aproximado total
+
+    const wouldOverflowRight =
+      position.x + buttonSize + optionWidth + margin > window.innerWidth;
+    const wouldOverflowBottom =
+      position.y + buttonSize + optionHeight + margin > window.innerHeight;
+
+    setMenuPlacement({
+      horizontal: wouldOverflowRight ? 'left' : 'right',
+      vertical: wouldOverflowBottom ? 'up' : 'down',
+    });
+  }, [position, templates.length, isExpanded]);
+
   const handleMouseDown = (e: React.MouseEvent<HTMLButtonElement>) => {
     startDrag(e.clientX, e.clientY);
     e.preventDefault();
@@ -175,7 +202,7 @@ const FloatingMenu: React.FC<FloatingMenuProps> = ({ activeTemplate, onTemplateC
       }}
       className="select-none"
     >
-      <div className="flex flex-col gap-2">
+      <div className="relative flex flex-col gap-2">
         {/* Botón principal - arrastrable y expandible */}
         <button
           onMouseDown={handleMouseDown}
@@ -203,7 +230,15 @@ const FloatingMenu: React.FC<FloatingMenuProps> = ({ activeTemplate, onTemplateC
 
         {/* Opciones expandibles */}
         {isExpanded && (
-          <div className="flex flex-col gap-2 transition-opacity duration-200">
+          <div
+            className="flex flex-col gap-2 transition-opacity duration-200 absolute"
+            style={{
+              top: menuPlacement.vertical === 'down' ? '3.25rem' : undefined,
+              bottom: menuPlacement.vertical === 'up' ? '3.25rem' : undefined,
+              left: menuPlacement.horizontal === 'right' ? 0 : undefined,
+              right: menuPlacement.horizontal === 'left' ? 0 : undefined,
+            }}
+          >
             {templates.map((template) => (
               <button
                 key={template.id}

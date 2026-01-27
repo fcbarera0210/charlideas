@@ -135,8 +135,12 @@ const Navbar = () => {
               {link.name}
             </a>
           ))}
-          <Button variant="primary" className="py-2 px-5 text-sm" onClick={() => {}}>
-            Empezar proyecto
+          <Button
+            variant="primary"
+            className="py-2 px-5 text-sm"
+            onClick={() => document.getElementById('contacto')?.scrollIntoView({ behavior: 'smooth' })}
+          >
+            Contar mi idea
           </Button>
         </div>
 
@@ -147,7 +151,7 @@ const Navbar = () => {
       </div>
 
       {/* Mobile Menu Dropdown */}
-      {isOpen && (
+          {isOpen && (
         <div className="md:hidden absolute top-full left-0 w-full bg-white border-b border-slate-100 shadow-xl py-6 px-6 flex flex-col gap-4">
           {navLinks.map((link) => (
             <a 
@@ -159,8 +163,15 @@ const Navbar = () => {
               {link.name}
             </a>
           ))}
-          <Button variant="primary" className="w-full mt-2" onClick={() => {}}>
-            Empezar proyecto
+          <Button
+            variant="primary"
+            className="w-full mt-2"
+            onClick={() => {
+              setIsOpen(false);
+              document.getElementById('contacto')?.scrollIntoView({ behavior: 'smooth' });
+            }}
+          >
+            Contar mi idea
           </Button>
         </div>
       )}
@@ -170,32 +181,43 @@ const Navbar = () => {
 
 const Hero = () => (
   <section className="relative pt-32 pb-24 md:pt-48 md:pb-32 px-6 overflow-hidden">
-    {/* Abstract Background Element */}
+    {/* Fondo abstracto */}
     <div className="absolute top-0 right-0 -translate-y-1/2 translate-x-1/3 w-[600px] h-[600px] bg-gradient-to-br from-[#00B4B9]/20 to-[#0A4F6E]/10 rounded-full blur-3xl -z-10 animate-pulse-slow"></div>
     <div className="absolute bottom-0 left-0 translate-y-1/3 -translate-x-1/3 w-[500px] h-[500px] bg-gradient-to-tr from-[#0E7C6B]/10 to-transparent rounded-full blur-3xl -z-10 animate-pulse-slow"></div>
 
     <div className="max-w-4xl mx-auto text-center">
       <RevealOnScroll>
         <div className="inline-block px-4 py-1.5 rounded-full bg-[#00B4B9]/10 text-[#00B4B9] font-semibold text-sm mb-6">
-            Estudio de Productos Digitales
+          Estudio de productos digitales para negocios reales
         </div>
       </RevealOnScroll>
       <RevealOnScroll delay={100}>
-        <h1 className="text-5xl md:text-7xl font-bold text-slate-900 mb-8 leading-tight">
-          Productos digitales que <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00B4B9] to-[#0A4F6E]">funcionan</span> en la vida real
+        <h1 className="text-4xl sm:text-5xl md:text-7xl font-bold text-slate-900 mb-8 leading-tight">
+          Digitalizamos tu negocio y{" "}
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00B4B9] to-[#0A4F6E]">
+            creamos landings
+          </span>{" "}
+          que convierten
         </h1>
       </RevealOnScroll>
       <RevealOnScroll delay={200}>
         <p className="text-xl md:text-2xl text-slate-600 mb-10 max-w-2xl mx-auto leading-relaxed">
-          Diseñamos y construimos sistemas web y marcas digitales pensadas para personas, negocios y uso diario.
+          Sistemas web y páginas de aterrizaje pensadas para que más personas pidan, reserven, compren o conozcan tu
+          marca, sin que tengas que volverte experto en tecnología.
         </p>
       </RevealOnScroll>
       <RevealOnScroll delay={300} className="flex flex-col sm:flex-row gap-4 justify-center">
-        <Button variant="primary" onClick={() => document.getElementById('proyectos')?.scrollIntoView({behavior:'smooth'})}>
-          Ver proyectos <ArrowRight size={20} />
+        <Button
+          variant="primary"
+          onClick={() => document.getElementById('contacto')?.scrollIntoView({ behavior: 'smooth' })}
+        >
+          Contar mi idea <ArrowRight size={20} />
         </Button>
-        <Button variant="secondary" onClick={() => document.getElementById('contacto')?.scrollIntoView({behavior:'smooth'})}>
-          Contactar
+        <Button
+          variant="secondary"
+          onClick={() => document.getElementById('proyectos')?.scrollIntoView({ behavior: 'smooth' })}
+        >
+          Ver proyectos reales
         </Button>
       </RevealOnScroll>
     </div>
@@ -243,23 +265,34 @@ const About = () => (
       
       <div className="order-1 md:order-2">
         <SectionHeading 
-            title="Más que código, creamos soluciones"
-            subtitle=""
-            align="left"
+          title="¿Para quién es Charl!deas?"
+          subtitle="Trabajamos con negocios y personas que quieren pasar de la idea a un producto digital claro, usable y listo para operar."
+          align="left"
         />
         <div className="space-y-6 text-lg text-slate-600">
           <RevealOnScroll delay={100}>
             <p>
-                En <strong>Charl!deas</strong> creamos productos digitales completos: desde la idea y el diseño, hasta el desarrollo y la puesta en producción.
+              En <strong>Charl!deas</strong> ayudamos a dueños de restaurantes, profesionales y equipos pequeños a{" "}
+              <strong>digitalizar sus procesos</strong> o lanzar una <strong>landing page</strong> que explique bien qué hacen.
             </p>
           </RevealOnScroll>
           <RevealOnScroll delay={200}>
             <p>
-                No hacemos software por hacer. Construimos herramientas que se usan, se entienden y resuelven problemas reales.
+              No vendemos plantillas genéricas: tomamos tu caso, definimos reglas claras de negocio y construimos una herramienta que se usa todos los días.
+            </p>
+          </RevealOnScroll>
+          <RevealOnScroll delay={250}>
+            <p className="font-medium text-slate-700">
+              Si quieres <span className="text-slate-900">digitalizar tu negocio</span> o lanzar una{" "}
+              <span className="text-slate-900">landing clara para tu servicio o marca personal</span>, este es el lugar para hacerlo bien a la primera.
             </p>
           </RevealOnScroll>
           <ul className="space-y-3 mt-4">
-            {['Pensamiento de producto', 'Experiencia de usuario real', 'Criterio técnico sólido'].map((item, i) => (
+            {[
+              'Negocios que necesitan más pedidos y menos caos operativo',
+              'Profesionales que quieren una landing moderna para mostrarse bien',
+              'Equipos pequeños que requieren un primer producto digital (MVP) bien diseñado',
+            ].map((item, i) => (
                 <RevealOnScroll key={i} delay={300 + (i * 100)}>
                     <li className="flex items-center gap-3 text-slate-800 font-medium">
                         <CheckCircle size={20} className="text-[#00B4B9]" /> {item}
@@ -273,68 +306,101 @@ const About = () => (
   </section>
 );
 
-const ProjectCard = ({ project, index }: { project: Project; index: number }) => (
-  <RevealOnScroll delay={getStaggerDelay(index)} className="group rounded-2xl overflow-hidden bg-white border border-slate-200 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col h-full">
-    {/* Abstract/Mock Visual Header */}
-    <div className={`h-48 w-full ${project.colorBg} relative flex items-center justify-center overflow-hidden`}>
-       <div className="absolute inset-0 opacity-20 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-white to-transparent"></div>
-       <div className={`transform ${hoverTransitions.scale}`}>
-        <img src={project.logo} alt={`Logo de ${project.title}`} className="h-16 w-auto object-contain drop-shadow-lg" loading="lazy" />
-       </div>
-       <div className="absolute bottom-4 right-4 bg-white/90 backdrop-blur px-3 py-1 rounded-full text-xs font-bold text-slate-700 shadow-sm">
-         {project.tag}
-       </div>
-    </div>
-    
-    <div className="p-8 flex-1 flex flex-col">
-      <h3 className="text-2xl font-bold text-slate-900 mb-2">{project.title}</h3>
-      <p className="text-slate-600 mb-6 flex-1">{project.shortDescription}</p>
-      
-      <div className="mt-auto pt-6 border-t border-slate-100">
-         <div className="flex flex-wrap gap-2 mb-4">
-            {project.stack.map(tech => (
+const ProjectCard = ({ project, index }: { project: Project; index: number }) => {
+  const handleCardClick = () => {
+    if (project.deployedUrl) {
+      window.open(project.deployedUrl, '_blank', 'noopener,noreferrer');
+    }
+  };
+
+  const handleInnerLinkClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.stopPropagation();
+  };
+
+  const isClickable = Boolean(project.deployedUrl);
+
+  return (
+    <RevealOnScroll
+      delay={getStaggerDelay(index)}
+      className="group rounded-2xl overflow-hidden bg-white border border-slate-200 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
+    >
+      <div
+        onClick={handleCardClick}
+        role={isClickable ? 'button' : undefined}
+        tabIndex={isClickable ? 0 : -1}
+        onKeyDown={(e) => {
+          if (!isClickable) return;
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            handleCardClick();
+          }
+        }}
+        className="flex flex-col h-full cursor-pointer"
+      >
+        {/* Abstract/Mock Visual Header */}
+        <div className={`h-48 w-full ${project.colorBg} relative flex items-center justify-center overflow-hidden`}>
+          <div className="absolute inset-0 opacity-20 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-white to-transparent"></div>
+          <div className={`transform ${hoverTransitions.scale}`}>
+            <img src={project.logo} alt={`Logo de ${project.title}`} className="h-16 w-auto object-contain drop-shadow-lg" loading="lazy" />
+          </div>
+          <div className="absolute bottom-4 right-4 bg-white/90 backdrop-blur px-3 py-1 rounded-full text-xs font-bold text-slate-700 shadow-sm">
+            {project.tag}
+          </div>
+        </div>
+        
+        <div className="p-8 flex-1 flex flex-col">
+          <h3 className="text-2xl font-bold text-slate-900 mb-2">{project.title}</h3>
+          <p className="text-slate-600 mb-6 flex-1">{project.shortDescription}</p>
+          
+          <div className="mt-auto pt-6 border-t border-slate-100">
+            <div className="flex flex-wrap gap-2 mb-4">
+              {project.stack.map(tech => (
                 <span key={tech} className="text-xs font-medium text-slate-500 bg-slate-100 px-2 py-1 rounded-md">
-                    {tech}
+                  {tech}
                 </span>
-            ))}
-         </div>
-         <div className="flex items-center gap-3">
-           {project.deployedUrl && (
-             <a 
-               href={project.deployedUrl} 
-               target="_blank" 
-               rel="noopener noreferrer"
-               className="text-[#00B4B9] font-semibold text-sm flex items-center gap-1 group-hover:gap-2 transition-all hover:text-[#009da1] focus:outline-none focus:ring-2 focus:ring-[#00B4B9] focus:ring-offset-2 rounded"
-             >
-               Ver proyecto <ExternalLink size={16} />
-             </a>
-           )}
-           {project.githubUrl && (
-             <a 
-               href={project.githubUrl} 
-               target="_blank" 
-               rel="noopener noreferrer"
-               className="text-slate-500 hover:text-slate-700 transition-colors focus:outline-none focus:ring-2 focus:ring-[#00B4B9] focus:ring-offset-2 rounded p-1"
-               aria-label={`Ver código de ${project.title} en GitHub`}
-             >
-               <Github size={18} />
-             </a>
-           )}
-         </div>
+              ))}
+            </div>
+            <div className="flex items-center gap-3">
+              {project.deployedUrl && (
+                <a 
+                  href={project.deployedUrl} 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  onClick={handleInnerLinkClick}
+                  className="text-[#00B4B9] font-semibold text-sm flex items-center gap-1 group-hover:gap-2 transition-all hover:text-[#009da1] focus:outline-none focus:ring-2 focus:ring-[#00B4B9] focus:ring-offset-2 rounded"
+                >
+                  Ver proyecto <ExternalLink size={16} />
+                </a>
+              )}
+              {project.githubUrl && (
+                <a 
+                  href={project.githubUrl} 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  onClick={handleInnerLinkClick}
+                  className="text-slate-500 hover:text-slate-700 transition-colors focus:outline-none focus:ring-2 focus:ring-[#00B4B9] focus:ring-offset-2 rounded p-1"
+                  aria-label={`Ver código de ${project.title} en GitHub`}
+                >
+                  <Github size={18} />
+                </a>
+              )}
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
-  </RevealOnScroll>
-);
+    </RevealOnScroll>
+  );
+};
 
 const Projects = () => {
   const projects = getFeaturedProjects();
 
   return (
-    <section id="proyectos" className="py-24 bg-slate-50">
+    <section id="proyectos" className="py-20 sm:py-24 bg-slate-50">
       <div className="max-w-7xl mx-auto px-6">
         <SectionHeading 
-          title="Proyectos Destacados" 
-          subtitle="No son demos. Son productos diseñados para resolver problemas reales y operar negocios."
+          title="Proyectos reales que ya están en producción" 
+          subtitle="Cada uno de estos proyectos nació de un problema concreto de negocio y hoy se usa en el día a día."
         />
         
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -360,7 +426,7 @@ const ProcessItem = ({ number, title, desc, index }: { number: string; title: st
 );
 
 const Methodology = () => (
-  <section className="py-24 bg-slate-50">
+    <section className="py-20 sm:py-24 bg-slate-50">
     <div className="max-w-6xl mx-auto px-6">
         <div className="grid md:grid-cols-2 gap-16 items-center">
             <div>
@@ -406,7 +472,7 @@ const Services = () => {
     ];
 
     return (
-        <section id="servicios" className="py-24 bg-[#0A4F6E] text-white relative overflow-hidden">
+        <section id="servicios" className="py-20 sm:py-24 bg-[#0A4F6E] text-white relative overflow-hidden">
             {/* Background Pattern */}
              <div className="absolute top-0 left-0 w-full h-full opacity-10 pointer-events-none">
                  <div className="absolute right-0 top-0 w-96 h-96 bg-[#00B4B9] rounded-full blur-3xl translate-x-1/2 -translate-y-1/2"></div>
@@ -445,18 +511,48 @@ const Contact = () => (
                 <div className="w-20 h-20 bg-[#00B4B9]/10 rounded-full flex items-center justify-center mx-auto mb-8 text-[#00B4B9]">
                     <CharlideasLogo className="h-10 w-10" />
                 </div>
-                <h2 className="text-4xl md:text-5xl font-bold text-slate-900 mb-6">¿Hablamos de tu idea?</h2>
+                <h2 className="text-4xl md:text-5xl font-bold text-slate-900 mb-6">¿Digitalizamos tu idea?</h2>
                 <p className="text-xl text-slate-600 mb-10">
-                    Si tienes un problema en tu negocio, una idea en servilleta o necesitas una herramienta digital mejor, conversemos. Sin compromiso.
+                    Cuéntanos quién eres y qué quieres construir. Prepararemos un mensaje para continuar la conversación por WhatsApp.
                 </p>
-                <div className="flex flex-col sm:flex-row justify-center gap-4">
-                    <Button variant="primary" className="text-lg px-8 py-4" onClick={() => {}}>
-                        Agendar una llamada
-                    </Button>
-                    <Button variant="secondary" className="text-lg px-8 py-4" onClick={() => {}}>
-                        Enviar un correo
-                    </Button>
-                </div>
+                <form 
+                  className="space-y-6 text-left max-w-xl mx-auto"
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    // Aquí se construirá el mensaje de WhatsApp usando nombre + idea
+                    // const url = `https://wa.me/TUNUMERO?text=${encodeURIComponent(...)}`;
+                    // window.open(url, '_blank');
+                  }}
+                >
+                  <div>
+                    <label className="block text-sm font-medium text-slate-700 mb-2">
+                      Nombre o empresa
+                    </label>
+                    <input
+                      type="text"
+                      required
+                      placeholder="Ej: Juan de SushiWey"
+                      className="w-full rounded-xl border border-slate-200 px-4 py-3 text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#00B4B9] focus:border-transparent"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-slate-700 mb-2">
+                      Descripción breve de la idea o negocio
+                    </label>
+                    <textarea
+                      required
+                      rows={4}
+                      placeholder="Ej: Quiero una landing para ofrecer mis asesorías / Necesito digitalizar los pedidos de mi local..."
+                      className="w-full rounded-xl border border-slate-200 px-4 py-3 text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#00B4B9] focus:border-transparent resize-none"
+                    />
+                  </div>
+                  <Button variant="primary" type="submit" className="w-full text-lg py-4">
+                    Preparar mensaje para WhatsApp
+                  </Button>
+                  <p className="text-xs text-slate-500 mt-3 text-center">
+                    El botón abrirá un chat de WhatsApp una vez que configuremos el número oficial de contacto.
+                  </p>
+                </form>
             </RevealOnScroll>
         </div>
     </section>

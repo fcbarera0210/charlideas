@@ -10,9 +10,9 @@ interface SEOProps {
 }
 
 const defaultSEO = {
-  title: 'Charl!deas — Estudio de Productos Digitales',
-  description: 'Diseñamos y construimos sistemas web y marcas digitales pensadas para personas, negocios y uso diario. Productos digitales que funcionan en la vida real.',
-  image: '/og-image.jpg', // TODO: Crear imagen OG
+  title: 'Charl!deas — Productos digitales para negocios reales',
+  description: 'Digitalizamos negocios y creamos landing pages claras para marcas y servicios. Sistemas web, PWAs y landings que organizan pedidos, finanzas, nutrición y productividad en la vida real.',
+  image: '/logo-charlideas.svg',
   url: 'https://charlideas.com', // TODO: Actualizar con URL real
   type: 'website',
   siteName: 'Charl!deas',
