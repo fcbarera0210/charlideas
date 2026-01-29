@@ -1,4 +1,4 @@
-// Utilidades de animación mejoradas para los templates
+// Utilidades de animación mejoradas con soporte para Framer Motion
 
 export const easingFunctions = {
   easeInOutCubic: 'cubic-bezier(0.4, 0, 0.2, 1)',
@@ -61,4 +61,63 @@ export const hoverTransitions = {
   lift: 'transition-transform duration-300 ease-out hover:-translate-y-1',
   glow: 'transition-shadow duration-300 ease-out hover:shadow-lg hover:shadow-[#00B4B9]/20',
   color: 'transition-colors duration-300 ease-out',
+};
+
+// Variantes de animación para Framer Motion
+export const motionVariants = {
+  fadeIn: {
+    hidden: { opacity: 0 },
+    visible: { 
+      opacity: 1,
+      transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] }
+    },
+  },
+  fadeInUp: {
+    hidden: { opacity: 0, y: 60 },
+    visible: { 
+      opacity: 1, 
+      y: 0,
+      transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] }
+    },
+  },
+  fadeInDown: {
+    hidden: { opacity: 0, y: -60 },
+    visible: { 
+      opacity: 1, 
+      y: 0,
+      transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] }
+    },
+  },
+  scaleIn: {
+    hidden: { opacity: 0, scale: 0.9 },
+    visible: { 
+      opacity: 1, 
+      scale: 1,
+      transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] }
+    },
+  },
+  slideInLeft: {
+    hidden: { opacity: 0, x: -60 },
+    visible: { 
+      opacity: 1, 
+      x: 0,
+      transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] }
+    },
+  },
+  slideInRight: {
+    hidden: { opacity: 0, x: 60 },
+    visible: { 
+      opacity: 1, 
+      x: 0,
+      transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] }
+    },
+  },
+};
+
+// Configuración de transiciones para Framer Motion
+export const motionTransitions = {
+  smooth: { duration: 0.6, ease: [0.22, 1, 0.36, 1] },
+  fast: { duration: 0.3, ease: [0.22, 1, 0.36, 1] },
+  slow: { duration: 0.9, ease: [0.22, 1, 0.36, 1] },
+  spring: { type: 'spring', stiffness: 260, damping: 20 },
 };
