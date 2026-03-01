@@ -1,149 +1,119 @@
 # Charl!deas
 
-Landing page oficial de Charl!deas - Digitalización de negocios y landings de alto impacto.
-
-## 📋 Descripción
-
-Charl!deas es un estudio de productos digitales que ayuda a negocios y personas a pasar de la idea a un producto digital claro, usable y listo para operar. Especializados en sistemas web, aplicaciones de gestión, landing pages y diseño UX/UI.
-
-Este proyecto es una landing page moderna y completamente responsive que muestra nuestros servicios, capacidades y proyectos reales en producción.
-
-## ✨ Características
-
-- 🎨 **Diseño Moderno**: Interfaz limpia y profesional con tema oscuro
-- 📱 **Totalmente Responsive**: Optimizado para mobile, tablet y desktop
-- 🎭 **Animaciones Fluidas**: Implementadas con Framer Motion para una experiencia de usuario excepcional
-- ⚡ **Rendimiento Optimizado**: Componentes memoizados y lazy loading
-- ♿ **Accesible**: Navegación por teclado y ARIA labels
-- 🎯 **SEO Optimizado**: Meta tags y estructura semántica
-- 📧 **Contacto Integrado**: Formulario con integración directa a WhatsApp
-
-## 🛠️ Tecnologías
-
-- **React 18** - Framework principal
-- **TypeScript** - Tipado estático para mayor seguridad
-- **Tailwind CSS** - Estilos utility-first
-- **Framer Motion** - Animaciones y transiciones suaves
-- **Vite** - Build tool rápido y optimizado
-- **Lucide React** - Iconos modernos y ligeros
-
-## 📦 Requisitos Previos
-
-- Node.js 18+ 
-- npm o yarn
-
-## 🚀 Instalación
-
-```bash
-# Clonar el repositorio
-git clone <repository-url>
-
-# Instalar dependencias
-npm install
-```
-
-## 💻 Desarrollo
-
-```bash
-# Iniciar servidor de desarrollo
-npm run dev
-```
-
-El servidor se iniciará en `http://localhost:5173/`
-
-## 🏗️ Build para Producción
-
-```bash
-# Crear build optimizado
-npm run build
-```
-
-El build se generará en la carpeta `dist/` lista para desplegar.
-
-## 👀 Preview del Build
-
-```bash
-# Previsualizar el build de producción
-npm run preview
-```
-
-## 📁 Estructura del Proyecto
-
-```
-src/
-├── components/          # Componentes React
-│   ├── layout/          # Componentes de layout
-│   │   ├── Navbar.tsx   # Barra de navegación
-│   │   ├── Footer.tsx   # Pie de página
-│   │   └── BackgroundEffects.tsx  # Efectos de fondo animados
-│   ├── sections/        # Secciones principales
-│   │   ├── Hero.tsx     # Sección hero
-│   │   ├── Projects.tsx # Portafolio de proyectos
-│   │   ├── Services.tsx # Servicios claros
-│   │   ├── Capabilities.tsx  # Capacidades técnicas
-│   │   └── ContactSection.tsx  # Formulario de contacto
-│   ├── ui/              # Componentes UI reutilizables
-│   │   ├── Button.tsx   # Botón con variantes
-│   │   ├── Card.tsx     # Card base
-│   │   ├── ProjectCard.tsx  # Card de proyecto
-│   │   └── Logo.tsx     # Logo de Charl!deas
-│   └── SEO.tsx          # Componente SEO
-├── hooks/               # Hooks personalizados
-│   ├── useScrollReveal.ts  # Animaciones de scroll
-│   ├── useScrollPosition.ts  # Detección de scroll
-│   └── useIntersectionObserver.ts  # Observer mejorado
-├── utils/               # Utilidades
-│   ├── animations.ts    # Configuraciones de animación
-│   └── constants.ts    # Constantes de la aplicación
-├── data/               # Datos estáticos
-│   └── projects.ts     # Información de proyectos
-├── App.tsx             # Componente principal
-├── main.tsx            # Punto de entrada
-└── index.css           # Estilos globales
-```
-
-## 🎨 Características de Diseño
-
-### Animaciones
-- **Scroll Reveal**: Elementos que aparecen al hacer scroll
-- **Hover Effects**: Animaciones rápidas y fluidas (100ms)
-- **Stagger Animations**: Animaciones escalonadas en grids
-- **Micro-interacciones**: Feedback visual en botones y cards
-
-### Responsividad
-- Breakpoints optimizados para mobile, tablet y desktop
-- Grid layouts adaptativos
-- Tipografía responsive
-- Menú móvil con animaciones
-
-### Accesibilidad
-- Navegación por teclado completa
-- ARIA labels en elementos interactivos
-- Contraste de colores adecuado
-- Soporte para `prefers-reduced-motion`
-
-## 📱 Secciones
-
-1. **Hero**: Presentación principal con call-to-action
-2. **Proyectos**: Portafolio de proyectos reales en producción
-3. **Servicios Claros**: Servicios ofrecidos con iconos
-4. **Capacidades**: Habilidades técnicas y metodologías
-5. **Contacto**: Formulario integrado con WhatsApp
-
-## 🔧 Scripts Disponibles
-
-- `npm run dev` - Inicia el servidor de desarrollo
-- `npm run build` - Crea el build de producción
-- `npm run preview` - Previsualiza el build de producción
-
-## 📄 Licencia
-
-Privado - Charl!deas © 2024
-
-## 👥 Contacto
-
-Para más información, visita nuestra landing page o contáctanos directamente a través del formulario de contacto.
+Sitio web oficial de **Charl!deas** — estudio de productos digitales. Landing corporativa que presenta servicios, capacidades y proyectos en producción.
 
 ---
 
-Desarrollado con ❤️ por Charl!deas
+## Descripción
+
+Charl!deas acompaña a negocios y personas desde la idea hasta un producto digital usable y listo para operar. Nos especializamos en:
+
+- Sistemas web a medida
+- Aplicaciones de gestión y operación
+- Landing pages y sitios corporativos
+- Diseño UX/UI y experiencia de usuario
+
+Este repositorio corresponde a la **landing page** del estudio: una SPA responsive que muestra quiénes somos, qué hacemos y casos reales (SushiWey, Cherry Experience, Lukita, Postly, NutriTrack).
+
+---
+
+## Tecnologías
+
+| Stack        | Uso                          |
+|-------------|------------------------------|
+| React 18    | UI y componentes             |
+| TypeScript  | Tipado y mantenibilidad     |
+| Vite        | Build y dev server          |
+| Tailwind CSS| Estilos y diseño responsive |
+| Framer Motion | Animaciones y transiciones |
+| Lucide React | Iconografía                |
+
+---
+
+## Requisitos
+
+- **Node.js** 18 o superior  
+- **npm** (o yarn/pnpm)
+
+---
+
+## Instalación y uso
+
+```bash
+# Clonar e instalar dependencias
+git clone <repository-url>
+cd charlideas
+npm install
+
+# Desarrollo local
+npm run dev
+# → http://localhost:5173
+
+# Build para producción (ej. Vercel)
+npm run build
+
+# Vista previa del build
+npm run preview
+```
+
+---
+
+## Scripts
+
+| Comando           | Descripción                          |
+|-------------------|--------------------------------------|
+| `npm run dev`     | Servidor de desarrollo con HMR       |
+| `npm run build`   | Compila TypeScript y genera build en `dist/` |
+| `npm run preview`  | Sirve el contenido de `dist/` localmente     |
+
+---
+
+## Estructura del proyecto
+
+```
+src/
+├── components/
+│   ├── layout/          # Navbar, Footer, efectos de fondo
+│   ├── sections/        # Hero, Proyectos, Servicios, Capacidades, Contacto
+│   ├── ui/              # Button, Card, ProjectCard, Logo
+│   └── SEO.tsx
+├── hooks/               # useScrollReveal, useScrollPosition, useIntersectionObserver
+├── utils/               # animations, constants
+├── data/
+│   └── projects.ts      # Datos de proyectos (títulos, descripciones, logos, URLs)
+├── App.tsx
+├── main.tsx
+└── index.css
+```
+
+La sección **Proyectos** toma los datos de `src/data/projects.ts`. Los dos primeros proyectos (por `order`) se muestran como destacados en una fila de dos columnas; el resto en grid de tres columnas.
+
+---
+
+## Secciones de la landing
+
+1. **Hero** — Presentación y llamada a acción  
+2. **Proyectos reales** — Portafolio (SushiWey, Cherry Experience y otros)  
+3. **Servicios** — Qué ofrecemos  
+4. **Capacidades** — Stack y metodología  
+5. **Contacto** — Formulario con enlace a WhatsApp  
+
+---
+
+## Deploy (Vercel)
+
+El proyecto está preparado para Vercel:
+
+- Build: `npm run build`
+- Directorio de salida: `dist/`
+- No requiere variables de entorno para el build estándar
+
+Conectar el repo a Vercel y usar estos valores es suficiente para un deploy correcto.
+
+---
+
+## Licencia y contacto
+
+**Charl!deas** © 2024–2025. Uso privado.
+
+Para consultas profesionales: a través del formulario de la web o los canales indicados en el sitio.

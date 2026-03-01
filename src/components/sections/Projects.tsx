@@ -6,8 +6,8 @@ import { STAGGER_DELAYS } from '../../utils/constants';
 
 export const Projects = () => {
   const projects = getFeaturedProjects();
-  const featuredProject = projects[0];
-  const otherProjects = projects.slice(1);
+  const featuredProjects = projects.slice(0, 2);
+  const otherProjects = projects.slice(2);
 
   const titleReveal = useScrollReveal({ direction: 'up', delay: 0 });
   const containerVariants = {
@@ -53,30 +53,40 @@ export const Projects = () => {
         </motion.div>
 
         <motion.div
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:items-stretch"
+          className="space-y-6"
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: '-100px' }}
         >
-          <motion.div
-            variants={itemVariants}
-            className="md:col-span-2 lg:col-span-2 h-full md:h-full"
-          >
-            <ProjectCard project={featuredProject} span={true} delay={0} />
-          </motion.div>
-          {otherProjects.map((project, idx) => (
-            <motion.div
-              key={project.id}
-              variants={itemVariants}
-              className="h-full md:h-full"
-            >
-              <ProjectCard
-                project={project}
-                delay={(idx + 1) * STAGGER_DELAYS.medium}
-              />
-            </motion.div>
-          ))}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:items-stretch">
+            {featuredProjects.map((project, idx) => (
+              <motion.div
+                key={project.id}
+                variants={itemVariants}
+                className="h-full md:h-full"
+              >
+                <ProjectCard
+                  project={project}
+                  delay={idx * STAGGER_DELAYS.medium}
+                />
+              </motion.div>
+            ))}
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:items-stretch">
+            {otherProjects.map((project, idx) => (
+              <motion.div
+                key={project.id}
+                variants={itemVariants}
+                className="h-full md:h-full"
+              >
+                <ProjectCard
+                  project={project}
+                  delay={(idx + 2) * STAGGER_DELAYS.medium}
+                />
+              </motion.div>
+            ))}
+          </div>
         </motion.div>
       </div>
     </section>

@@ -33,6 +33,24 @@ export const projects: Project[] = [
     order: 1
   },
   {
+    id: 'cherry-experience',
+    title: 'Cherry Experience',
+    description:
+      'Sitio web para Cherry Experience, expertos en turismo de montaña y conservación en los Andes de Chile. Con más de 10 años conectando personas con la naturaleza salvaje. Incluye rutas, blog, galería, información de dificultad y reservas, con diseño orientado a inspirar y facilitar la planificación de experiencias outdoor.',
+    shortDescription:
+      'Web de turismo de montaña y conservación en los Andes de Chile: rutas, blog, galería y reservas para conectar con la naturaleza.',
+    tag: 'Turismo & naturaleza',
+    category: 'Tourism & Nature',
+    stack: ['Web', 'Turismo', 'Conservación', 'UX'],
+    logo: '/che-blanco-2.svg',
+    colorBg: 'bg-gradient-to-br from-emerald-500 to-green-700',
+    imageGradient: 'from-emerald-500 to-green-700',
+    deployedUrl: 'https://www.cherryexperience.cl/es',
+    githubUrl: '', // Repo privado
+    featured: true,
+    order: 2
+  },
+  {
     id: 'lukita',
     title: 'Lukita',
     description: 'PWA de finanzas personales enfocada en la realidad chilena (CLP sin decimales). Permite gestionar cuentas, ingresos y gastos, presupuestos por categoría, transacciones recurrentes y búsquedas avanzadas, con soporte offline y sincronización con Firebase. El foco está en tener un tablero claro mes a mes, sin planillas, y con una navegación pensada para uso diario en móvil.',
@@ -46,7 +64,7 @@ export const projects: Project[] = [
       deployedUrl: 'https://lukita.vercel.app/',
     githubUrl: '', // TODO: Agregar repositorio GitHub
     featured: true,
-    order: 2
+    order: 3
   },
   {
     id: 'postly',
@@ -62,7 +80,7 @@ export const projects: Project[] = [
       deployedUrl: 'https://postly-three-blush.vercel.app/',
     githubUrl: '', // TODO: Agregar repositorio GitHub
     featured: true,
-    order: 3
+    order: 4
   },
   {
     id: 'nutritrack',
@@ -76,24 +94,6 @@ export const projects: Project[] = [
     colorBg: 'bg-gradient-to-br from-lime-400 to-green-600',
     imageGradient: 'from-lime-500 to-green-600',
       deployedUrl: 'https://nutritrack-nu-lyart.vercel.app/',
-    githubUrl: '', // TODO: Agregar repositorio GitHub
-    featured: true,
-    order: 4
-  },
-  {
-    id: 'comtelsat',
-    title: 'Comtelsat',
-    description:
-      'Sitio corporativo para Comtelsat, empresa de telecomunicaciones, seguridad, automatizaciones y energía solar en Curicó, Chile. El frontend en Vue 3 y TypeScript organiza servicios por categoría, integra una galería multimedia y un formulario de contacto listo para conectar con backend o email. El proyecto está optimizado con Vite, lazy loading de imágenes y despliegue en Firebase Hosting para un rendimiento confiable.',
-    shortDescription:
-      'Sitio corporativo en Vue 3 para Comtelsat: servicios de telecomunicaciones, seguridad, automatizaciones y energía solar, optimizado y desplegado en Firebase.',
-    tag: 'telecom & seguridad',
-    category: 'Telecom & Seguridad',
-    stack: ['Vue 3', 'TypeScript', 'Vite', 'Sass', 'Firebase'],
-    logo: '/logo-comtelsat.svg',
-    colorBg: 'bg-gradient-to-br from-blue-500 to-sky-600',
-    imageGradient: 'from-blue-500 to-sky-600',
-      deployedUrl: 'https://comtelsat-1109.web.app/',
     githubUrl: '', // TODO: Agregar repositorio GitHub
     featured: true,
     order: 5
